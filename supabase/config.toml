@@ -23,6 +23,8 @@ enabled = true
 port = 54323
 
 # Local email testing (Mailpit UI at http://127.0.0.1:54324).
+# Newer CLIs warn that [inbucket] is deprecated in favour of [local_smtp]; we keep [inbucket] on purpose
+# because Supabase's hosted branching config parser still rejects [local_smtp] (supabase/cli#5801).
 [inbucket]
 enabled = true
 port = 54324
