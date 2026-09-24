@@ -29,6 +29,11 @@ function authErrorKey(error: AuthError): string {
       return "auth.errors.userExists";
     case "weak_password":
       return "auth.errors.weakPassword";
+    case "email_address_invalid":
+      return "auth.errors.emailInvalid";
+    // Supabase's built-in email sender (no custom SMTP) only delivers to the project's team members.
+    case "email_address_not_authorized":
+      return "auth.errors.emailNotAllowed";
     case "over_request_rate_limit":
     case "over_email_send_rate_limit":
       return "auth.errors.rateLimited";

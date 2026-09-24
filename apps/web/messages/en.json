@@ -92,6 +92,8 @@
       "userExists": "An account with this email already exists.",
       "weakPassword": "This password isn't strong enough.",
       "rateLimited": "Too many attempts. Please wait a moment and try again.",
+      "emailInvalid": "This email address isn't accepted. Please use a real email address.",
+      "emailNotAllowed": "We can't send email to this address right now. Try another address or contact us.",
       "linkInvalid": "This link is invalid or has expired. Please request a new one.",
       "sessionExpired": "Your session expired. Please request a new reset link.",
       "generic": "Something went wrong. Please try again."
