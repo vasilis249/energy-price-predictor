@@ -24,6 +24,11 @@ function authErrorKey(error: AuthError): string {
     console.error("Supabase auth unreachable:", error.message, "- check NEXT_PUBLIC_SUPABASE_URL");
     return "auth.errors.serviceUnavailable";
   }
+  // The API gateway rejects the key before auth runs, so there's no error code.
+  if (error.status === 401 && /api key/i.test(error.message)) {
+    console.error("Supabase rejected the API key - check NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
+    return "auth.errors.serviceUnavailable";
+  }
   switch (error.code) {
     case "invalid_credentials":
       return "auth.errors.invalidCredentials";
