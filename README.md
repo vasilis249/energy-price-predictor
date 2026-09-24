@@ -59,7 +59,7 @@ pnpm dev                               # http://localhost:3000
 
 - Sign up at http://localhost:3000/signup. The confirmation email arrives in **Mailpit** at
   http://127.0.0.1:54324.
-- Supabase Studio (database browser): http://127.0.0.1:54323
+- Supabase Studio (database browser) is disabled by default to keep Docker light; set `[studio] enabled = true` in `supabase/config.toml` to use it at http://127.0.0.1:54323
 - Python service: `cd services/forecast && uv sync && uv run uvicorn forecast.api.app:app --reload`
   (or `docker compose -f infra/docker-compose.yml up --build`), then http://localhost:8000/health
 

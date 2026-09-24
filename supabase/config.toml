@@ -18,9 +18,23 @@ major_version = 17
 enabled = true
 sql_paths = ["./seed.sql"]
 
+# Services we don't use are disabled to keep the local stack light (Docker on laptops struggles
+# with the full set). Set enabled = true if you need them, e.g. Studio as a database browser.
 [studio]
-enabled = true
+enabled = false
 port = 54323
+
+[realtime]
+enabled = false
+
+[storage]
+enabled = false
+
+[edge_runtime]
+enabled = false
+
+[analytics]
+enabled = false
 
 # Local email testing (Mailpit UI at http://127.0.0.1:54324).
 # Newer CLIs warn that [inbucket] is deprecated in favour of [local_smtp]; we keep [inbucket] on purpose
