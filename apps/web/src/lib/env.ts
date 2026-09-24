@@ -12,10 +12,25 @@ const publicEnvSchema = z.object({
     .transform((v) => v === "true"),
 });
 
-export const publicEnv = publicEnvSchema.parse({
-  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+const parsed = publicEnvSchema.safeParse({
+  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || undefined,
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || undefined,
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || undefined,
   NEXT_PUBLIC_CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || undefined,
   NEXT_PUBLIC_GOOGLE_AUTH_ENABLED: process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED || undefined,
 });
+
+if (!parsed.success) {
+  const problems = parsed.error.issues.map(
+    (issue) => `  - ${issue.path.join(".")}: ${issue.input === undefined ? "missing or empty" : issue.message}`,
+  );
+  throw new Error(
+    [
+      "Invalid web app configuration:",
+      ...problems,
+      "Copy .env.example to apps/web/.env.local, fill in these values, then restart `pnpm dev`.",
+    ].join("\n"),
+  );
+}
+
+export const publicEnv = parsed.data;
