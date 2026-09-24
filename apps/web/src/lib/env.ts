@@ -2,7 +2,8 @@ import { z } from "zod";
 
 // NEXT_PUBLIC_* values must be referenced literally so Next.js can inline them in client bundles.
 const publicEnvSchema = z.object({
-  NEXT_PUBLIC_SUPABASE_URL: z.url(),
+  // Only the origin: people often paste the REST URL (".../rest/v1/") shown in the dashboard.
+  NEXT_PUBLIC_SUPABASE_URL: z.url().transform((url) => new URL(url).origin),
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
   NEXT_PUBLIC_SITE_URL: z.url().default("http://localhost:3000"),
   NEXT_PUBLIC_CONTACT_EMAIL: z.email().default("support@example.com"),
