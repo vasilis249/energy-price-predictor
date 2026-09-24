@@ -1,0 +1,2 @@
+-- Local development seed. Runs after migrations on `supabase db reset`.
+-- Intentionally empty in M1: sign up through the UI (emails arrive in Mailpit).

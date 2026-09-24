@@ -1,0 +1,11 @@
+{{ if eq .Data.locale "en" }}
+<h2>Confirm your email</h2>
+<p>Thanks for signing up. Click the link below to confirm your email address:</p>
+<p><a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&locale=en">Confirm email</a></p>
+<p>If you didn't create an account, you can ignore this email.</p>
+{{ else }}
+<h2>Επιβεβαιώστε το email σας</h2>
+<p>Ευχαριστούμε για την εγγραφή. Πατήστε τον παρακάτω σύνδεσμο για να επιβεβαιώσετε τη διεύθυνση email σας:</p>
+<p><a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&locale=el">Επιβεβαίωση email</a></p>
+<p>Αν δεν δημιουργήσατε λογαριασμό, αγνοήστε αυτό το μήνυμα.</p>
+{{ end }}
