@@ -96,6 +96,7 @@
       "emailNotAllowed": "We can't send email to this address right now. Try another address or contact us.",
       "linkInvalid": "This link is invalid or has expired. Please request a new one.",
       "sessionExpired": "Your session expired. Please request a new reset link.",
+      "serviceUnavailable": "We couldn't reach the account service. Check your connection and try again.",
       "generic": "Something went wrong. Please try again."
     }
   },

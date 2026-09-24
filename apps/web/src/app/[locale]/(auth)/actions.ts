@@ -1,6 +1,6 @@
 "use server";
 
-import type { AuthError } from "@supabase/supabase-js";
+import { isAuthRetryableFetchError, type AuthError } from "@supabase/supabase-js";
 import { getLocale } from "next-intl/server";
 import { redirect as redirectExternal } from "next/navigation";
 import { redirect } from "@/i18n/navigation";
@@ -19,6 +19,11 @@ import {
 import { formDataToObject, toFieldErrors } from "@/lib/validation/form";
 
 function authErrorKey(error: AuthError): string {
+  // Network failure reaching Supabase (wrong NEXT_PUBLIC_SUPABASE_URL, outage, no connection).
+  if (isAuthRetryableFetchError(error)) {
+    console.error("Supabase auth unreachable:", error.message, "- check NEXT_PUBLIC_SUPABASE_URL");
+    return "auth.errors.serviceUnavailable";
+  }
   switch (error.code) {
     case "invalid_credentials":
       return "auth.errors.invalidCredentials";
