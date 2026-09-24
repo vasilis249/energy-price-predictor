@@ -27,3 +27,10 @@ def test_internal_endpoints_require_key(client: TestClient, headers: dict[str, s
 
 def test_internal_endpoint_with_key(client: TestClient) -> None:
     assert client.get("/internal/ping", headers={"X-Internal-Api-Key": "test-key"}).status_code == 200
+
+
+def test_internal_endpoints_disabled_without_configured_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("FORECAST_INTERNAL_API_KEY", raising=False)
+    get_settings.cache_clear()
+    client = TestClient(create_app())
+    assert client.get("/internal/ping", headers={"X-Internal-Api-Key": ""}).status_code == 503

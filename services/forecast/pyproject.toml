@@ -9,7 +9,18 @@ dependencies = [
   "uvicorn[standard]>=0.30",
   "pydantic>=2.8",
   "pydantic-settings>=2.4",
+  "pandas>=3.0.6",
+  "numpy>=2.4.6",
+  "psycopg[binary]>=3.3.6",
+  "tenacity>=9.1.4",
+  "httpx>=0.28.1",
+  "openpyxl>=3.1.5",
+  "holidays>=0.105",
+  "defusedxml>=0.7.1",
 ]
+
+[project.scripts]
+forecast = "forecast.cli:main"
 
 [dependency-groups]
 dev = [
@@ -26,7 +37,7 @@ build-backend = "hatchling.build"
 packages = ["src/forecast"]
 
 [tool.ruff]
-line-length = 110
+line-length = 120
 target-version = "py311"
 
 [tool.ruff.lint]
@@ -35,3 +46,4 @@ ignore = ["S101"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["tests"]
