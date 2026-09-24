@@ -1,0 +1,215 @@
+{
+  "common": {
+    "appName": "Energy Price Predictor",
+    "tagline": "Electricity price forecasts for renewable energy producers",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Your changes were saved.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "optional": "optional",
+    "mw": "MW",
+    "hours": "hours",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you're looking for doesn't exist or has moved.",
+    "goHome": "Home page",
+    "errorTitle": "Something went wrong",
+    "errorBody": "An unexpected error occurred. Please try again.",
+    "retry": "Try again"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "plants": "Plants",
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "login": "Log in",
+    "signup": "Sign up",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "mainNavigation": "Main navigation"
+  },
+  "home": {
+    "title": "Know in advance which hours will be expensive",
+    "subtitle": "Forecasts of the Greek Day-Ahead Market price, published before the auction closes. For biogas, solar, wind and small hydro plants.",
+    "ctaPrimary": "Start your 14-day free trial",
+    "ctaSecondary": "I already have an account",
+    "feature1Title": "Tomorrow's forecast, every morning",
+    "feature1Body": "The next-day forecast is published before the bidding gate closes (12:00 CET), together with an indicative 7-day outlook.",
+    "feature2Title": "Uncertainty ranges",
+    "feature2Body": "Not just a single line: see the likely price range (P10–P90) and the hours with zero or negative prices.",
+    "feature3Title": "Production schedule",
+    "feature3Body": "For biogas plants we suggest when to produce, based on your gas storage and your engines' constraints."
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "orgName": "Company name",
+    "orgNameHint": "If left empty, your name is used.",
+    "passwordHint": "At least 10 characters, with lowercase, uppercase and a number.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "or": "or",
+    "continueWithGoogle": "Continue with Google",
+    "acceptTerms": "I accept the <terms>Terms of use</terms> and the <privacy>Privacy policy</privacy>.",
+    "login": {
+      "title": "Log in",
+      "submit": "Log in",
+      "forgot": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "14-day free trial. No card needed to get started.",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Log in"
+    },
+    "checkEmail": {
+      "title": "Check your email",
+      "body": "We sent you a confirmation link. Click it to activate your account.",
+      "hint": "Can't find it? Check your spam folder too."
+    },
+    "forgot": {
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email and we'll send you a link to choose a new password.",
+      "submit": "Send link",
+      "sent": "If an account exists for this email, you'll receive a link shortly.",
+      "backToLogin": "Back to log in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "submit": "Save password",
+      "done": "Your password was changed."
+    },
+    "errors": {
+      "invalidCredentials": "Wrong email or password.",
+      "emailNotConfirmed": "Please confirm your email first. Check your inbox.",
+      "userExists": "An account with this email already exists.",
+      "weakPassword": "This password isn't strong enough.",
+      "rateLimited": "Too many attempts. Please wait a moment and try again.",
+      "linkInvalid": "This link is invalid or has expired. Please request a new one.",
+      "sessionExpired": "Your session expired. Please request a new reset link.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "validation": {
+    "required": "This field is required.",
+    "invalidEmail": "Enter a valid email address.",
+    "tooLong": "This text is too long.",
+    "invalidNumber": "Enter a valid number.",
+    "outOfRange": "This value is outside the allowed range.",
+    "passwordTooShort": "Password must be at least 10 characters.",
+    "passwordTooWeak": "Password must contain lowercase, uppercase and a number.",
+    "passwordsDontMatch": "Passwords don't match.",
+    "mustAcceptTerms": "You need to accept the terms to continue.",
+    "coordinatesPair": "Fill in both latitude and longitude, or neither.",
+    "maxLoadExceedsCapacity": "Maximum load can't exceed installed capacity.",
+    "avgExceedsMaxLoad": "Average production can't exceed maximum load."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}",
+    "forecastTitle": "Price forecast",
+    "forecastComingSoon": "Price forecasts will appear here. We're connecting the market data sources right now.",
+    "plantsTitle": "Your plants",
+    "noPlants": "You haven't added a plant yet.",
+    "addFirstPlant": "Add your first plant",
+    "plantCount": "{count, plural, =0 {No plants} one {# plant} other {# plants}} · {capacity} MW total",
+    "managePlants": "Manage plants"
+  },
+  "plants": {
+    "title": "Plants",
+    "subtitle": "Your organization's generation units.",
+    "add": "Add plant",
+    "newTitle": "New plant",
+    "editTitle": "Edit plant",
+    "empty": "No plants yet.",
+    "emptyHint": "Add your plant to get forecasts and production schedule suggestions.",
+    "created": "Plant added.",
+    "updated": "Plant updated.",
+    "deleted": "Plant deleted.",
+    "deleteConfirmTitle": "Delete plant?",
+    "deleteConfirmBody": "\"{name}\" and all its settings will be permanently deleted.",
+    "notFound": "Plant not found.",
+    "sectionGeneral": "General",
+    "sectionLocation": "Location",
+    "sectionBiogas": "Biogas plant operation",
+    "sectionBiogasHint": "We need these to suggest a production schedule that respects your engines' limits.",
+    "fields": {
+      "name": "Plant name",
+      "plantType": "Type",
+      "capacityMw": "Installed capacity (MW)",
+      "supportScheme": "Support scheme",
+      "locationName": "Area",
+      "locationNamePlaceholder": "e.g. Larissa",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "notes": "Notes",
+      "avgProductionMw": "Average biogas production (MWe)",
+      "avgProductionMwHint": "The output you'd produce running flat around the clock.",
+      "gasStorageHours": "Gas storage (hours at full load)",
+      "gasStorageHoursHint": "How many hours the plant can run at maximum output on stored gas alone.",
+      "minLoadPct": "Minimum load (%)",
+      "maxLoadMw": "Maximum load (MW)",
+      "maxStartsPerDay": "Maximum starts per day",
+      "rampMwPerHour": "Ramp rate (MW/hour)",
+      "rampMwPerHourHint": "Leave empty if there is no limit.",
+      "minUpHours": "Minimum run time (hours)",
+      "minDownHours": "Minimum off time (hours)"
+    },
+    "types": {
+      "biogas": "Biogas",
+      "pv": "Solar PV",
+      "wind": "Wind",
+      "small_hydro": "Small hydro",
+      "other": "Other"
+    },
+    "schemes": {
+      "fip": "Feed-in premium (FiP)",
+      "fit": "Feed-in tariff (FiT)",
+      "merchant": "Merchant (no support)",
+      "unknown": "I don't know"
+    },
+    "fitNotice": "With a fixed feed-in tariff (FiT), your revenue doesn't depend on the hourly market price, so shifting production won't increase revenue. Forecasts are still useful for information.",
+    "coordinatesHint": "Optional. Helps us forecast your production more accurately later."
+  },
+  "settings": {
+    "title": "Settings",
+    "profileTitle": "Profile",
+    "orgTitle": "Organization",
+    "orgOwnerOnly": "Only the organization owner can change the name.",
+    "languageTitle": "Language",
+    "languageHint": "Used for the app and the emails we send you.",
+    "accountTitle": "Account",
+    "accountEmail": "Signed in as {email}",
+    "dataRights": "Data export and account deletion are coming soon. Until then, email us at {email}."
+  },
+  "language": {
+    "el": "Ελληνικά",
+    "en": "English"
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclaimer": "Disclaimer",
+    "cookies": "Cookies",
+    "disclaimerShort": "Forecasts are estimates and are not investment or financial advice.",
+    "rights": "© {year} {appName}"
+  },
+  "cookies": {
+    "title": "Cookies",
+    "body": "We only use the cookies needed for signing in and remembering your language. With your consent, we may also use anonymous usage statistics in the future.",
+    "acceptAll": "Accept all",
+    "necessaryOnly": "Necessary only",
+    "learnMore": "Learn more"
+  },
+  "legal": {
+    "lastUpdated": "Last updated: {date}",
+    "draftNotice": "Draft: this text must be reviewed by a legal advisor before public launch."
+  }
+}
