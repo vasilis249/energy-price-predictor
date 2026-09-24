@@ -85,13 +85,13 @@ export async function signup(_prev: ActionState, formData: FormData): Promise<Ac
   if (!parsed.success) return { status: "error", fieldErrors: toFieldErrors(parsed.error) };
 
   const locale = await getLocale();
-  const { email, password, fullName, orgName } = parsed.data;
+  const { email, password, fullName, orgName, marketRole } = parsed.data;
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { full_name: fullName, org_name: orgName ?? "", locale },
+      data: { full_name: fullName, org_name: orgName ?? "", locale, market_role: marketRole },
       emailRedirectTo: callbackUrl(locale),
     },
   });

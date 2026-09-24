@@ -50,11 +50,19 @@ export async function asUser<T>(user: TestUser | null, fn: (db: pg.PoolClient) =
   }
 }
 
-/** Seed a plant directly as admin (bypasses RLS). */
-export async function insertPlant(orgId: string, name = "Plant"): Promise<string> {
+/** Seed a site directly as admin (bypasses RLS). */
+export async function insertSite(orgId: string, name = "Site"): Promise<string> {
   const { rows } = await pool.query(
-    "insert into public.plants (org_id, name, plant_type, capacity_mw) values ($1, $2, 'biogas', 1.0) returning id",
+    "insert into public.sites (org_id, name, site_type, latitude, longitude) values ($1, $2, 'livestock_farm', 39.6, 22.4) returning id",
     [orgId, name],
   );
   return rows[0].id;
 }
+
+/** Make a user a platform admin (admin connection). */
+export async function makeAdmin(user: TestUser) {
+  await pool.query("update public.profiles set is_platform_admin = true where id = $1", [user.id]);
+}
+
+// Valid Greek VAT numbers (check digit OK).
+export const AFM = { a: "090000045", b: "994645446", c: "123456783" };

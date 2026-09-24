@@ -10,8 +10,9 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/signup">
   return { title: t("title") };
 }
 
-export default async function SignupPage({ params }: PageProps<"/[locale]/signup">) {
+export default async function SignupPage({ params, searchParams }: PageProps<"/[locale]/signup">) {
   setRequestLocale((await params).locale as Locale);
+  const { role } = await searchParams;
   const t = await getTranslations("auth.signup");
   return (
     <Card>
@@ -21,7 +22,7 @@ export default async function SignupPage({ params }: PageProps<"/[locale]/signup
       </CardHeader>
       <CardContent className="grid gap-5">
         <GoogleButton />
-        <SignupForm />
+        <SignupForm role={role === "buyer" || role === "seller" ? role : undefined} />
       </CardContent>
     </Card>
   );

@@ -7,6 +7,10 @@ const publicEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
   NEXT_PUBLIC_SITE_URL: z.url().default("http://localhost:3000"),
   NEXT_PUBLIC_CONTACT_EMAIL: z.email().default("support@example.com"),
+  // Map tiles. OpenStreetMap's servers are fine for development but not for production traffic
+  // (tile usage policy): set a commercial provider (MapTiler, Stadia, ...) in production.
+  NEXT_PUBLIC_MAP_TILE_URL: z.string().default("https://tile.openstreetmap.org/{z}/{x}/{y}.png"),
+  NEXT_PUBLIC_MAP_ATTRIBUTION: z.string().default("© OpenStreetMap contributors"),
   NEXT_PUBLIC_GOOGLE_AUTH_ENABLED: z
     .enum(["true", "false"])
     .default("false")
@@ -18,6 +22,8 @@ const parsed = publicEnvSchema.safeParse({
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || undefined,
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || undefined,
   NEXT_PUBLIC_CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || undefined,
+  NEXT_PUBLIC_MAP_TILE_URL: process.env.NEXT_PUBLIC_MAP_TILE_URL || undefined,
+  NEXT_PUBLIC_MAP_ATTRIBUTION: process.env.NEXT_PUBLIC_MAP_ATTRIBUTION || undefined,
   NEXT_PUBLIC_GOOGLE_AUTH_ENABLED: process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED || undefined,
 });
 

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { optionalText, requiredText } from "./form";
+import { marketRole } from "./organization";
 
 // Keep in sync with supabase/config.toml [auth] minimum_password_length / password_requirements.
 export const MIN_PASSWORD_LENGTH = 10;
@@ -21,6 +22,7 @@ export const loginSchema = z.object({
 });
 
 export const signupSchema = z.object({
+  marketRole,
   fullName: requiredText(120),
   orgName: optionalText(120),
   email,

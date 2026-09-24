@@ -1,10 +1,9 @@
-# Energy Price Predictor
+# BioFeed Market
 
-Subscription platform that forecasts wholesale electricity prices in Greece (HEnEx Day-Ahead
-Market, bidding zone GR) for owners of renewable plants. It starts with biogas plants, which can
-shift production into expensive hours. Greek (default) and English.
-
-> Forecasts are estimates and are not investment or financial advice.
+A marketplace for biogas feedstock in Greece (working name). **Sellers** (livestock farms, dairies,
+olive mills, food producers, farmers) list manure, whey, olive mill wastewater and other residues.
+**Buyers** (biogas plants) find them nearby, agree supply contracts, record weighed deliveries and pay
+through the platform. The platform earns a commission per payment. Greek (default) and English.
 
 ## Architecture
 
@@ -21,28 +20,22 @@ flowchart LR
     AUTH[Auth<br/>email/password, Google]
     DB[(Postgres<br/>RLS per organization)]
   end
-  subgraph Forecast["services/forecast: Python"]
-    API[FastAPI<br/>optimizer, admin jobs]
-    JOBS[Scheduled jobs<br/>ingest · forecast · evaluate · train]
-  end
-  SRC[(ENTSO-E · HEnEx · IPTO<br/>EEX · Open-Meteo)]
+  STRIPE[Stripe Connect<br/>payments, payouts]
+  MAP[Map tiles]
 
   U --> P --> RSC
   RSC -- user JWT --> DB
   RSC --> AUTH
-  RSC -- internal API key --> API
-  JOBS --> SRC
-  JOBS --> DB
-  API --> DB
+  RSC -. milestone 4 .-> STRIPE
+  U --> MAP
 ```
 
 - **Web** (`apps/web`) renders everything server-side. All user-data queries use the signed-in
   user's session, so Postgres Row Level Security guarantees one organization never sees another's data.
 - **Supabase** provides Postgres and Auth: email verification, password reset and optional Google login.
-- **Forecast service** (`services/forecast`) ingests market data, trains models, publishes forecasts
-  and solves the production-scheduling MILP. In Milestone 1 it's a skeleton with a health endpoint.
-- All times are stored in UTC and shown in Europe/Athens. Market data keeps its native resolution:
-  15-minute since 1 Oct 2025, hourly before.
+- Sellers' exact site locations stay private; other users only ever see an approximate location.
+- All times are stored in UTC and shown in Europe/Athens.
+- `services/forecast` is a dormant Python service from the project's earlier electricity-price concept.
 
 ## Run it locally
 
@@ -60,16 +53,16 @@ pnpm dev                               # http://localhost:3000
 - Sign up at http://localhost:3000/signup. The confirmation email arrives in **Mailpit** at
   http://127.0.0.1:54324.
 - Supabase Studio (database browser) is disabled by default to keep Docker light; set `[studio] enabled = true` in `supabase/config.toml` to use it at http://127.0.0.1:54323
-- Python service: `cd services/forecast && uv sync && uv run uvicorn forecast.api.app:app --reload`
-  (or `docker compose -f infra/docker-compose.yml up --build`), then http://localhost:8000/health
+- **Make yourself a platform admin** (to verify businesses at `/admin`): in the SQL editor (Supabase
+  dashboard) or `psql`, run
+  `update public.profiles set is_platform_admin = true where id = (select id from auth.users where email = 'you@example.com');`
 
 ### Tests
 
 ```bash
 pnpm lint && pnpm typecheck && pnpm test   # unit tests (validation, translations, consent)
 pnpm test:db                               # RLS tests against Supabase local Postgres
-pnpm e2e                                   # Playwright: signup → email → plants → language → login, reset, isolation
-cd services/forecast && uv run pytest
+pnpm e2e                                   # Playwright: seller/buyer signup → onboarding → sites on the map, admin verification, reset, isolation
 ```
 
 Without Docker, RLS tests can run on any plain Postgres:
@@ -88,12 +81,13 @@ Without Docker, RLS tests can run on any plain Postgres:
 
 ## Roadmap
 
-1. ✅ Project setup, auth, organizations, plant profiles, i18n
-2. Data ingestion (ENTSO-E, HEnEx, IPTO, EEX) + historical database + baseline forecast
-3. Dashboard (forecast bands, actuals, heatmap) + public accuracy page
-4. LightGBM quantile model with walk-forward backtesting
-5. Stripe subscriptions (trial, Tax, portal) + server-side plan gating
-6. Production-scheduling optimizer (MILP) + alerts
-7. Admin panel, deployment, monitoring, GDPR export/deletion
+1. ✅ Foundation: auth, organizations, i18n, CI
+2. ✅ Marketplace foundation: buyer/seller roles, company details with ΑΦΜ, admin verification, sites
+   on a map, public feedstock catalog
+3. Listings and search: sellers publish feedstock (quantity, availability, price or gate fee); buyers
+   search by type, distance and price, in a list or on a map
+4. Offers, counter-offers, messages and supply agreements, with email notifications
+5. Deliveries (weighed quantity, documents) and payments: Stripe Connect, card/SEPA, commission, gate fees
+6. Admin tools, reviews, GDPR export/deletion, deployment and monitoring
 
 See `CLAUDE.md` for conventions.

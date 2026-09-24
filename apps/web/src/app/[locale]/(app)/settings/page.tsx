@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
+import { VerificationBadge } from "@/components/layout/status-badge";
 import { Alert } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Locale } from "@/i18n/routing";
@@ -42,8 +43,28 @@ export default async function SettingsPage({ params, searchParams }: PageProps<"
             <CardHeader>
               <CardTitle>{t("settings.orgTitle")}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <OrganizationForm name={org.name} canEdit={org.role === "owner"} />
+            <CardContent className="grid gap-5">
+              <dl className="grid gap-2 text-sm sm:grid-cols-2">
+                <div>
+                  <dt className="text-muted-foreground">{t("settings.roleLabel")}</dt>
+                  <dd className="font-medium">{org.market_role ? t(`roles.${org.market_role}`) : "—"}</dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground">{t("settings.verificationLabel")}</dt>
+                  <dd>
+                    <VerificationBadge status={org.verification_status} />
+                  </dd>
+                </div>
+              </dl>
+              <OrganizationForm
+                org={{
+                  name: org.name,
+                  legalName: org.legal_name ?? "",
+                  vatNumber: org.vat_number ?? "",
+                  phone: org.phone ?? "",
+                }}
+                canEdit={org.role === "owner"}
+              />
             </CardContent>
           </Card>
         )}

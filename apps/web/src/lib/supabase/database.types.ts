@@ -9,56 +9,6 @@ export type Database = {
   };
   public: {
     Tables: {
-      biogas_params: {
-        Row: {
-          avg_production_mw: number;
-          created_at: string;
-          gas_storage_hours: number;
-          max_load_mw: number;
-          max_starts_per_day: number;
-          min_down_hours: number;
-          min_load_pct: number;
-          min_up_hours: number;
-          plant_id: string;
-          ramp_mw_per_hour: number | null;
-          updated_at: string;
-        };
-        Insert: {
-          avg_production_mw: number;
-          created_at?: string;
-          gas_storage_hours: number;
-          max_load_mw: number;
-          max_starts_per_day: number;
-          min_down_hours?: number;
-          min_load_pct: number;
-          min_up_hours?: number;
-          plant_id: string;
-          ramp_mw_per_hour?: number | null;
-          updated_at?: string;
-        };
-        Update: {
-          avg_production_mw?: number;
-          created_at?: string;
-          gas_storage_hours?: number;
-          max_load_mw?: number;
-          max_starts_per_day?: number;
-          min_down_hours?: number;
-          min_load_pct?: number;
-          min_up_hours?: number;
-          plant_id?: string;
-          ramp_mw_per_hour?: number | null;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "biogas_params_plant_id_fkey";
-            columns: ["plant_id"];
-            isOneToOne: true;
-            referencedRelation: "plants";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
       memberships: {
         Row: {
           created_at: string;
@@ -93,77 +43,99 @@ export type Database = {
           created_at: string;
           created_by: string | null;
           id: string;
+          legal_name: string | null;
+          market_role: Database["public"]["Enums"]["market_role"] | null;
           name: string;
+          payouts_enabled: boolean;
+          phone: string | null;
+          stripe_account_id: string | null;
+          stripe_customer_id: string | null;
           updated_at: string;
+          vat_number: string | null;
+          verification_note: string | null;
+          verification_status: Database["public"]["Enums"]["verification_status"];
+          verified_at: string | null;
         };
         Insert: {
           created_at?: string;
           created_by?: string | null;
           id?: string;
+          legal_name?: string | null;
+          market_role?: Database["public"]["Enums"]["market_role"] | null;
           name: string;
+          payouts_enabled?: boolean;
+          phone?: string | null;
+          stripe_account_id?: string | null;
+          stripe_customer_id?: string | null;
           updated_at?: string;
+          vat_number?: string | null;
+          verification_note?: string | null;
+          verification_status?: Database["public"]["Enums"]["verification_status"];
+          verified_at?: string | null;
         };
         Update: {
           created_at?: string;
           created_by?: string | null;
           id?: string;
+          legal_name?: string | null;
+          market_role?: Database["public"]["Enums"]["market_role"] | null;
           name?: string;
+          payouts_enabled?: boolean;
+          phone?: string | null;
+          stripe_account_id?: string | null;
+          stripe_customer_id?: string | null;
           updated_at?: string;
+          vat_number?: string | null;
+          verification_note?: string | null;
+          verification_status?: Database["public"]["Enums"]["verification_status"];
+          verified_at?: string | null;
         };
         Relationships: [];
       };
-      plants: {
+      feedstock_types: {
         Row: {
-          capacity_mw: number;
-          created_at: string;
-          id: string;
-          latitude: number | null;
-          location_name: string | null;
-          longitude: number | null;
-          name: string;
-          notes: string | null;
-          org_id: string;
-          plant_type: Database["public"]["Enums"]["plant_type"];
-          support_scheme: Database["public"]["Enums"]["support_scheme"];
-          updated_at: string;
+          abp_category: number | null;
+          active: boolean;
+          category: Database["public"]["Enums"]["feedstock_category"];
+          code: string;
+          default_unit: Database["public"]["Enums"]["quantity_unit"];
+          ewc_code: string | null;
+          is_animal_by_product: boolean;
+          name_el: string;
+          name_en: string;
+          sort_order: number;
+          typical_biogas_m3_per_t: number | null;
+          typical_dm_pct: number | null;
         };
         Insert: {
-          capacity_mw: number;
-          created_at?: string;
-          id?: string;
-          latitude?: number | null;
-          location_name?: string | null;
-          longitude?: number | null;
-          name: string;
-          notes?: string | null;
-          org_id: string;
-          plant_type: Database["public"]["Enums"]["plant_type"];
-          support_scheme?: Database["public"]["Enums"]["support_scheme"];
-          updated_at?: string;
+          abp_category?: number | null;
+          active?: boolean;
+          category?: Database["public"]["Enums"]["feedstock_category"];
+          code?: string;
+          default_unit?: Database["public"]["Enums"]["quantity_unit"];
+          ewc_code?: string | null;
+          is_animal_by_product?: boolean;
+          name_el?: string;
+          name_en?: string;
+          sort_order?: number;
+          typical_biogas_m3_per_t?: number | null;
+          typical_dm_pct?: number | null;
         };
         Update: {
-          capacity_mw?: number;
-          created_at?: string;
-          id?: string;
-          latitude?: number | null;
-          location_name?: string | null;
-          longitude?: number | null;
-          name?: string;
-          notes?: string | null;
-          org_id?: string;
-          plant_type?: Database["public"]["Enums"]["plant_type"];
-          support_scheme?: Database["public"]["Enums"]["support_scheme"];
-          updated_at?: string;
+          abp_category?: number | null;
+          active?: boolean;
+          category?: Database["public"]["Enums"]["feedstock_category"];
+          code?: string;
+          default_unit?: Database["public"]["Enums"]["quantity_unit"];
+          ewc_code?: string | null;
+          is_animal_by_product?: boolean;
+          name_el?: string;
+          name_en?: string;
+          sort_order?: number;
+          typical_biogas_m3_per_t?: number | null;
+          typical_dm_pct?: number | null;
         };
-        Relationships: [
-          {
-            foreignKeyName: "plants_org_id_fkey";
-            columns: ["org_id"];
-            isOneToOne: false;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
-          },
-        ];
+        Relationships: [];
       };
       profiles: {
         Row: {
@@ -192,6 +164,56 @@ export type Database = {
         };
         Relationships: [];
       };
+      sites: {
+        Row: {
+          address: string | null;
+          created_at: string;
+          id: string;
+          latitude: number;
+          longitude: number;
+          municipality: string | null;
+          name: string;
+          notes: string | null;
+          org_id: string;
+          site_type: Database["public"]["Enums"]["site_type"];
+          updated_at: string;
+        };
+        Insert: {
+          address?: string | null;
+          created_at?: string;
+          id?: string;
+          latitude: number;
+          longitude: number;
+          municipality?: string | null;
+          name: string;
+          notes?: string | null;
+          org_id: string;
+          site_type: Database["public"]["Enums"]["site_type"];
+          updated_at?: string;
+        };
+        Update: {
+          address?: string | null;
+          created_at?: string;
+          id?: string;
+          latitude?: number;
+          longitude?: number;
+          municipality?: string | null;
+          name?: string;
+          notes?: string | null;
+          org_id?: string;
+          site_type?: Database["public"]["Enums"]["site_type"];
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "sites_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -199,16 +221,36 @@ export type Database = {
     Functions: {
       is_org_member: { Args: { target_org: string }; Returns: boolean };
       is_org_owner: { Args: { target_org: string }; Returns: boolean };
-      save_plant: {
-        Args: { p_biogas?: Json; p_org_id: string; p_plant: Json; p_plant_id?: string };
+      admin_set_verification: {
+        Args: { p_note?: string; p_org_id: string; p_status: Database["public"]["Enums"]["verification_status"] };
+        Returns: undefined;
+      };
+      complete_onboarding: {
+        Args: {
+          p_legal_name: string;
+          p_phone: string;
+          p_role: Database["public"]["Enums"]["market_role"];
+          p_vat_number: string;
+        };
         Returns: string;
       };
+      is_platform_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
+      is_valid_afm: { Args: { afm: string }; Returns: boolean };
     };
     Enums: {
       app_locale: "el" | "en";
+      feedstock_category:
+        | "animal_manure"
+        | "energy_crop"
+        | "agricultural_residue"
+        | "food_industry"
+        | "food_waste"
+        | "other";
+      market_role: "buyer" | "seller";
       org_role: "owner" | "member";
-      plant_type: "biogas" | "pv" | "wind" | "small_hydro" | "other";
-      support_scheme: "fit" | "fip" | "merchant" | "unknown";
+      quantity_unit: "t" | "m3";
+      site_type: "biogas_plant" | "livestock_farm" | "agriculture" | "food_industry" | "other";
+      verification_status: "pending" | "verified" | "rejected";
     };
     CompositeTypes: {
       [_ in never]: never;

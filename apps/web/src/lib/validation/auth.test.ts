@@ -4,6 +4,7 @@ import { resetPasswordSchema, safeNextPath, signupSchema } from "./auth";
 
 describe("signupSchema", () => {
   const valid = {
+    marketRole: "seller",
     fullName: "Μαρία Παπαδοπούλου",
     email: " Maria@Example.GR ",
     password: "Str0ngPassw0rd",

@@ -5,7 +5,8 @@ import { redirect } from "@/i18n/navigation";
 import type { ActionState } from "@/lib/action-state";
 import { createClient } from "@/lib/supabase/server";
 import { formDataToObject, toFieldErrors } from "@/lib/validation/form";
-import { organizationSchema, profileSchema } from "@/lib/validation/settings";
+import { organizationProfileSchema } from "@/lib/validation/organization";
+import { profileSchema } from "@/lib/validation/settings";
 import { getCurrentOrg, getSessionUser } from "@/server/auth";
 import { persistLocale } from "@/server/locale";
 
@@ -37,11 +38,16 @@ export async function updateOrganization(_prev: ActionState, formData: FormData)
   const org = await getCurrentOrg();
   if (!org) return { status: "error", formError: "auth.errors.sessionExpired" };
   if (org.role !== "owner") return { status: "error", formError: "settings.orgOwnerOnly" };
-  const parsed = organizationSchema.safeParse(formDataToObject(formData));
+  const parsed = organizationProfileSchema.safeParse(formDataToObject(formData));
   if (!parsed.success) return { status: "error", fieldErrors: toFieldErrors(parsed.error) };
 
+  const { orgName, legalName, vatNumber, phone } = parsed.data;
   const supabase = await createClient();
-  const { error } = await supabase.from("organizations").update({ name: parsed.data.orgName }).eq("id", org.id);
+  const { error } = await supabase
+    .from("organizations")
+    .update({ name: orgName, legal_name: legalName, vat_number: vatNumber, phone })
+    .eq("id", org.id);
+  if (error?.code === "23505") return { status: "error", formError: "onboarding.roleTaken" };
   if (error) {
     console.error("organization update failed", error);
     return { status: "error", formError: "auth.errors.generic" };

@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/routing";
 
-// DRAFT legal texts. They describe how the platform actually works, but must be reviewed by a
+// DRAFT legal texts. They describe how the marketplace actually works, but must be reviewed by a
 // lawyer (and completed with the operator's company details) before public launch.
 // "{contact}" is replaced with NEXT_PUBLIC_CONTACT_EMAIL.
 
@@ -10,7 +10,7 @@ export type LegalDoc = (typeof legalDocs)[number];
 type Section = { heading: string; paragraphs: string[] };
 type Doc = { title: string; updated: string; sections: Section[] };
 
-const UPDATED = "2026-09-24";
+const UPDATED = "2026-09-25";
 
 export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
   el: {
@@ -27,31 +27,35 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
         {
           heading: "Ποια δεδομένα συλλέγουμε",
           paragraphs: [
-            "Στοιχεία λογαριασμού: ονοματεπώνυμο, email, επωνυμία εταιρείας και κρυπτογραφημένος κωδικός πρόσβασης (ή το αναγνωριστικό σας Google, αν συνδεθείτε με Google).",
-            "Στοιχεία σταθμών: τύπος, ισχύς, καθεστώς στήριξης, προαιρετική τοποθεσία και τεχνικά χαρακτηριστικά λειτουργίας που εισάγετε εσείς.",
-            "Στοιχεία συνδρομής: τα διαχειρίζεται η Stripe. Εμείς δεν αποθηκεύουμε στοιχεία κάρτας.",
+            "Στοιχεία λογαριασμού: ονοματεπώνυμο, email, κρυπτογραφημένος κωδικός (ή αναγνωριστικό Google).",
+            "Στοιχεία επιχείρησης: επωνυμία, ΑΦΜ, τηλέφωνο, ρόλος (αγοραστής ή πωλητής) και κατάσταση επαλήθευσης.",
+            "Εγκαταστάσεις: ονομασία, τύπος, δήμος, διεύθυνση και συντεταγμένες. Η ακριβής θέση δεν εμφανίζεται σε άλλους χρήστες πριν από συμφωνία.",
+            "Αγγελίες, προσφορές, συμφωνίες, παραδόσεις και μηνύματα μεταξύ των μερών.",
+            "Στοιχεία πληρωμών: τα διαχειρίζεται η Stripe (έλεγχος ταυτότητας πωλητών, IBAN, κάρτες/εντολές SEPA). Εμείς δεν αποθηκεύουμε στοιχεία κάρτας ή τραπεζικού λογαριασμού.",
             "Τεχνικά δεδομένα: αρχεία καταγραφής διακομιστή (διεύθυνση IP, ώρα, σελίδα) για λόγους ασφάλειας.",
           ],
         },
         {
           heading: "Γιατί τα χρησιμοποιούμε και με ποια νομική βάση",
           paragraphs: [
-            "Για την παροχή της υπηρεσίας (εκτέλεση σύμβασης, άρθρο 6 παρ. 1 β ΓΚΠΔ): λογαριασμός, προβλέψεις, προγράμματα παραγωγής, ειδοποιήσεις.",
-            "Για την τιμολόγηση και τις φορολογικές μας υποχρεώσεις (νομική υποχρέωση, άρθρο 6 παρ. 1 γ).",
-            "Για την ασφάλεια και τη βελτίωση της υπηρεσίας (έννομο συμφέρον, άρθρο 6 παρ. 1 στ).",
+            "Για τη λειτουργία της αγοράς (εκτέλεση σύμβασης, άρθρο 6 παρ. 1 β ΓΚΠΔ): αγγελίες, προσφορές, συμφωνίες, παραδόσεις, πληρωμές και ειδοποιήσεις.",
+            "Για την επαλήθευση επιχειρήσεων και την πρόληψη απάτης (έννομο συμφέρον, άρθρο 6 παρ. 1 στ).",
+            "Για φορολογικές υποχρεώσεις, όπως τιμολόγηση της προμήθειας και δηλώσεις πλατφόρμας προς την ΑΑΔΕ κατά την Οδηγία DAC7 / ν. 5047/2023 (νομική υποχρέωση, άρθρο 6 παρ. 1 γ).",
             "Για προαιρετικά στατιστικά χρήσης, μόνο με τη συγκατάθεσή σας (άρθρο 6 παρ. 1 α).",
           ],
         },
         {
           heading: "Με ποιους τα μοιραζόμαστε",
           paragraphs: [
-            "Με εκτελούντες την επεξεργασία που μας βοηθούν να λειτουργήσουμε την υπηρεσία: Supabase (βάση δεδομένων και σύνδεση, διακομιστές στην ΕΕ), Stripe (πληρωμές), πάροχος αποστολής email, και πάροχος φιλοξενίας. Δεν πουλάμε τα δεδομένα σας.",
+            "Με τον αντισυμβαλλόμενο: όταν κάνετε προσφορά ή κλείνετε συμφωνία, η άλλη πλευρά βλέπει την επωνυμία σας και τα στοιχεία επικοινωνίας που χρειάζονται για την εκτέλεσή της.",
+            "Με εκτελούντες την επεξεργασία: Supabase (βάση δεδομένων και σύνδεση, διακομιστές στην ΕΕ), Stripe (πληρωμές), πάροχος αποστολής email, πάροχος χαρτών και πάροχος φιλοξενίας.",
+            "Με την ΑΑΔΕ, όπου το απαιτεί ο νόμος (π.χ. DAC7). Δεν πουλάμε τα δεδομένα σας.",
           ],
         },
         {
           heading: "Πόσο καιρό τα κρατάμε",
           paragraphs: [
-            "Όσο διατηρείτε λογαριασμό. Μετά τη διαγραφή του λογαριασμού, τα δεδομένα διαγράφονται εντός 30 ημερών, εκτός από τα τιμολόγια που φυλάσσουμε όσο απαιτεί η φορολογική νομοθεσία.",
+            "Όσο διατηρείτε λογαριασμό. Τα στοιχεία συναλλαγών και τιμολόγησης φυλάσσονται όσο απαιτεί η φορολογική νομοθεσία, ακόμη και μετά τη διαγραφή του λογαριασμού.",
           ],
         },
         {
@@ -70,26 +74,48 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
         {
           heading: "Η υπηρεσία",
           paragraphs: [
-            "Παρέχουμε προβλέψεις τιμών της Αγοράς Επόμενης Ημέρας για την ελληνική ζώνη προσφορών και σχετικά εργαλεία (π.χ. προτάσεις προγράμματος παραγωγής, ειδοποιήσεις), μέσω συνδρομής.",
+            "Η πλατφόρμα είναι ηλεκτρονική αγορά που φέρνει σε επαφή παραγωγούς πρώτων υλών (π.χ. κοπριάς, υγρών αποβλήτων, υπολειμμάτων βιομηχανίας τροφίμων) με μονάδες βιοαερίου, και διευκολύνει τη σύναψη συμφωνιών προμήθειας, την καταγραφή παραδόσεων και τις πληρωμές.",
+            "Η πλατφόρμα δεν αγοράζει ούτε πωλεί πρώτες ύλες και δεν είναι μέρος των συμφωνιών μεταξύ αγοραστών και πωλητών.",
           ],
         },
         {
-          heading: "Λογαριασμός",
+          heading: "Λογαριασμοί και επαλήθευση",
           paragraphs: [
-            "Είστε υπεύθυνοι για την ακρίβεια των στοιχείων που εισάγετε και για την ασφάλεια του κωδικού σας. Ο λογαριασμός προορίζεται για επαγγελματική χρήση.",
+            "Η πλατφόρμα απευθύνεται σε επιχειρήσεις και επαγγελματίες (και αγρότες). Δηλώνετε αληθή στοιχεία επιχείρησης, συμπεριλαμβανομένου του ΑΦΜ. Μπορούμε να ελέγξουμε τα στοιχεία, να ζητήσουμε δικαιολογητικά και να αναστείλουμε λογαριασμούς με ανακριβή στοιχεία.",
+            "Κάθε επιχείρηση έχει έναν ρόλο (αγοραστής ή πωλητής), που επιλέγεται στην εγγραφή.",
           ],
         },
         {
-          heading: "Συνδρομή και δοκιμαστική περίοδος",
+          heading: "Αγγελίες, συμφωνίες και παραδόσεις",
           paragraphs: [
-            "Οι νέοι λογαριασμοί έχουν δωρεάν δοκιμαστική περίοδο 14 ημερών. Μετά, η συνδρομή χρεώνεται μηνιαία και ανανεώνεται αυτόματα μέχρι να την ακυρώσετε. Μπορείτε να ακυρώσετε οποτεδήποτε, με ισχύ στο τέλος της τρέχουσας περιόδου.",
+            "Ο πωλητής ευθύνεται για την ακρίβεια της αγγελίας (είδος, ποσότητα, σύσταση, διαθεσιμότητα, τιμή). Οι τυπικές τιμές ξηράς ουσίας και απόδοσης βιοαερίου που εμφανίζει η πλατφόρμα είναι ενδεικτικές.",
+            "Η συμφωνία προμήθειας δεσμεύει αγοραστή και πωλητή με τους όρους που αποδέχτηκαν. Η μεταφορά κανονίζεται μεταξύ τους, όπως ορίζει η συμφωνία.",
+            "Κάθε παράδοση καταγράφεται με την ποσότητα που ζυγίστηκε και επιβεβαιώνεται από την άλλη πλευρά. Αν δεν αμφισβητηθεί μέσα σε 72 ώρες, θεωρείται επιβεβαιωμένη.",
           ],
         },
         {
-          heading: "Προβλέψεις και ευθύνη",
+          heading: "Συμμόρφωση με τη νομοθεσία",
           paragraphs: [
-            "Οι προβλέψεις είναι στατιστικές εκτιμήσεις και μπορεί να διαφέρουν σημαντικά από τις πραγματικές τιμές. Δεν αποτελούν επενδυτική, χρηματοοικονομική ή εμπορική συμβουλή. Οι αποφάσεις παραγωγής και προσφορών είναι αποκλειστικά δικές σας.",
-            "Στο μέτρο που επιτρέπει ο νόμος, δεν ευθυνόμαστε για διαφυγόντα κέρδη ή έμμεσες ζημίες από τη χρήση της υπηρεσίας. Η συνολική μας ευθύνη περιορίζεται στο ποσό που καταβάλατε τους τελευταίους 12 μήνες.",
+            "Αγοραστές και πωλητές ευθύνονται αποκλειστικά για τη συμμόρφωση με τη νομοθεσία για τα απόβλητα και τα ζωικά υποπροϊόντα. Αυτό περιλαμβάνει: άδειες, εγκρίσεις εγκαταστάσεων και οχημάτων, εμπορικά έγγραφα διακίνησης ζωικών υποπροϊόντων (Κανονισμός (ΕΚ) 1069/2009), καταχωρίσεις στο Ηλεκτρονικό Μητρώο Αποβλήτων, και φορολογικά παραστατικά για κάθε παράδοση.",
+          ],
+        },
+        {
+          heading: "Πληρωμές και προμήθεια",
+          paragraphs: [
+            "Οι πληρωμές γίνονται μέσω της Stripe. Η τιμή ανά μονάδα μπορεί να είναι θετική (πληρώνει ο αγοραστής) ή αρνητική (ο πωλητής πληρώνει για την παραλαβή). Όποιος πληρώνει χρεώνεται μετά την επιβεβαίωση κάθε παράδοσης, με κάρτα ή εντολή SEPA.",
+            "Η πλατφόρμα παρακρατά προμήθεια από κάθε πληρωμή, σύμφωνα με τον τιμοκατάλογο που ισχύει κατά τη σύναψη της συμφωνίας. Όσοι εισπράττουν πρέπει να ολοκληρώσουν τον έλεγχο ταυτότητας της Stripe και ισχύουν και οι όροι της Stripe.",
+          ],
+        },
+        {
+          heading: "Διαφωνίες",
+          paragraphs: [
+            "Αν αμφισβητηθεί μια παράδοση, η πληρωμή της αναστέλλεται και η πλατφόρμα μπορεί να μεσολαβήσει. Η τελική επίλυση των διαφορών είναι υπόθεση των μερών.",
+          ],
+        },
+        {
+          heading: "Ευθύνη",
+          paragraphs: [
+            "Στο μέτρο που επιτρέπει ο νόμος, η πλατφόρμα δεν ευθύνεται για την ποιότητα ή ποσότητα των πρώτων υλών, για τη μη εκτέλεση συμφωνιών από τα μέρη, ή για έμμεσες ζημίες. Η συνολική ευθύνη της περιορίζεται στις προμήθειες που εισέπραξε από εσάς τους τελευταίους 12 μήνες.",
           ],
         },
         {
@@ -103,17 +129,16 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
       updated: UPDATED,
       sections: [
         {
-          heading: "Οι προβλέψεις είναι εκτιμήσεις",
+          heading: "Ενδεικτικές τιμές",
           paragraphs: [
-            "Οι τιμές που εμφανίζονται είναι προβλέψεις που παράγονται από στατιστικά μοντέλα με βάση δημόσια δεδομένα της αγοράς (ΕΧΕ, ENTSO-E, ΑΔΜΗΕ) και δεν είναι εγγυημένες. Οι πραγματικές τιμές μπορεί να διαφέρουν σημαντικά, ιδίως σε ασυνήθιστες συνθήκες αγοράς.",
-            "Το εύρος P10–P90 σημαίνει ότι, κατά την εκτίμηση του μοντέλου, η πραγματική τιμή αναμένεται να βρίσκεται μέσα σε αυτό περίπου 8 στις 10 φορές. Κατά μέσο όρο, 1 στις 10 φορές θα είναι χαμηλότερη και 1 στις 10 υψηλότερη.",
-            "Όταν λείπουν δεδομένα, μπορεί να εμφανίζουμε μια απλούστερη πρόβλεψη βάσης και θα το επισημαίνουμε.",
+            "Η ξηρά ουσία και η απόδοση βιοαερίου που εμφανίζονται για κάθε είδος πρώτης ύλης είναι τυπικές τιμές από τη βιβλιογραφία. Η πραγματική σύσταση διαφέρει ανάλογα με τη φάρμα, την εποχή, τη διατροφή των ζώων και την αποθήκευση. Για αποφάσεις σίτισης μονάδας, χρησιμοποιήστε εργαστηριακή ανάλυση.",
           ],
         },
         {
-          heading: "Όχι συμβουλή",
+          heading: "Η πλατφόρμα δεν είναι συμβαλλόμενο μέρος",
           paragraphs: [
-            "Τίποτα σε αυτή την υπηρεσία δεν αποτελεί επενδυτική, χρηματοοικονομική, νομική ή εμπορική συμβουλή. Ελέγχετε πάντα τους όρους της σύμβασης στήριξης του σταθμού σας και τις υποχρεώσεις σας απέναντι στον ΦοΣΕ ή τον εκπρόσωπό σας.",
+            "Οι συμφωνίες συνάπτονται απευθείας μεταξύ αγοραστών και πωλητών. Η πλατφόρμα δεν εγγυάται την ποιότητα, την ποσότητα ή την έγκαιρη παράδοση, ούτε ελέγχει τη νομιμότητα της διακίνησης.",
+            "Τίποτα στην πλατφόρμα δεν αποτελεί νομική, φορολογική ή τεχνική συμβουλή.",
           ],
         },
       ],
@@ -128,6 +153,12 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
             "sb-…-auth-token: διατηρεί τη σύνδεσή σας (Supabase). Διάρκεια: όσο είστε συνδεδεμένοι.",
             "NEXT_LOCALE: θυμάται τη γλώσσα που επιλέξατε. Διάρκεια: 1 έτος.",
             "cookie_consent: θυμάται την επιλογή σας για τα cookies. Διάρκεια: 6 μήνες.",
+          ],
+        },
+        {
+          heading: "Χάρτες",
+          paragraphs: [
+            "Οι χάρτες φορτώνονται από τον πάροχο χαρτών. Για να σας σταλούν οι εικόνες του χάρτη, ο πάροχος λαμβάνει τη διεύθυνση IP σας. Δεν αποθηκεύονται cookies από τον χάρτη.",
           ],
         },
         {
@@ -153,31 +184,35 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
         {
           heading: "What we collect",
           paragraphs: [
-            "Account data: full name, email, company name and an encrypted password (or your Google identifier, if you sign in with Google).",
-            "Plant data: type, capacity, support scheme, optional location and the operating parameters you enter.",
-            "Subscription data: handled by Stripe. We never store card details.",
+            "Account data: full name, email, an encrypted password (or your Google identifier).",
+            "Business data: legal name, VAT number (ΑΦΜ), phone, role (buyer or seller) and verification status.",
+            "Sites: name, type, municipality, address and coordinates. Other users don't see the exact location before an agreement.",
+            "Listings, offers, agreements, deliveries and messages between the parties.",
+            "Payment data: handled by Stripe (seller identity checks, IBAN, cards/SEPA mandates). We never store card or bank account details.",
             "Technical data: server logs (IP address, time, page) for security purposes.",
           ],
         },
         {
           heading: "Why we use it and on what legal basis",
           paragraphs: [
-            "To provide the service (performance of a contract, GDPR Art. 6(1)(b)): your account, forecasts, production schedules and alerts.",
-            "For invoicing and our tax obligations (legal obligation, Art. 6(1)(c)).",
-            "For security and improving the service (legitimate interest, Art. 6(1)(f)).",
+            "To run the marketplace (performance of a contract, GDPR Art. 6(1)(b)): listings, offers, agreements, deliveries, payments and notifications.",
+            "To verify businesses and prevent fraud (legitimate interest, Art. 6(1)(f)).",
+            "For tax obligations, such as invoicing our commission and platform reporting to the Greek tax authority under DAC7 / Law 5047/2023 (legal obligation, Art. 6(1)(c)).",
             "For optional usage statistics, only with your consent (Art. 6(1)(a)).",
           ],
         },
         {
           heading: "Who we share it with",
           paragraphs: [
-            "Processors that help us run the service: Supabase (database and sign-in, EU servers), Stripe (payments), our email delivery provider and our hosting provider. We never sell your data.",
+            "Your counterparty: when you make an offer or an agreement, the other side sees your business name and the contact details needed to carry it out.",
+            "Processors: Supabase (database and sign-in, EU servers), Stripe (payments), our email delivery provider, our map provider and our hosting provider.",
+            "The Greek tax authority where the law requires it (e.g. DAC7). We never sell your data.",
           ],
         },
         {
           heading: "How long we keep it",
           paragraphs: [
-            "For as long as you have an account. After you delete your account, your data is deleted within 30 days, except invoices, which we keep for as long as tax law requires.",
+            "For as long as you have an account. Transaction and invoicing records are kept as long as tax law requires, even after the account is deleted.",
           ],
         },
         {
@@ -196,26 +231,48 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
         {
           heading: "The service",
           paragraphs: [
-            "We provide forecasts of Day-Ahead Market prices for the Greek bidding zone and related tools (such as production schedule suggestions and alerts), on a subscription basis.",
+            "The platform is an online marketplace that connects producers of feedstock (e.g. manure, slurry, food industry residues) with biogas plants. It helps them make supply agreements, record deliveries and handle payments.",
+            "The platform does not buy or sell feedstock and is not a party to agreements between buyers and sellers.",
           ],
         },
         {
-          heading: "Your account",
+          heading: "Accounts and verification",
           paragraphs: [
-            "You're responsible for the accuracy of the data you enter and for keeping your password safe. Accounts are intended for business use.",
+            "The platform is for businesses and professionals (including farmers). You must provide accurate business details, including your VAT number. We may check them, request documents and suspend accounts with inaccurate details.",
+            "Each business has one role (buyer or seller), chosen at signup.",
           ],
         },
         {
-          heading: "Subscription and trial",
+          heading: "Listings, agreements and deliveries",
           paragraphs: [
-            "New accounts get a 14-day free trial. After that, the subscription is billed monthly and renews automatically until you cancel. You can cancel at any time, effective at the end of the current period.",
+            "Sellers are responsible for accurate listings (type, quantity, composition, availability, price). The typical dry matter and biogas yield figures shown by the platform are indicative.",
+            "A supply agreement binds the buyer and seller to the terms they accepted. They arrange transport between themselves, as set out in the agreement.",
+            "Each delivery is recorded with its weighed quantity and confirmed by the other side. If it isn't disputed within 72 hours, it is considered confirmed.",
           ],
         },
         {
-          heading: "Forecasts and liability",
+          heading: "Legal compliance",
           paragraphs: [
-            "Forecasts are statistical estimates and can differ significantly from actual prices. They are not investment, financial or trading advice. Production and bidding decisions are entirely yours.",
-            "To the extent permitted by law, we're not liable for lost profits or indirect damages arising from use of the service. Our total liability is limited to the amount you paid in the last 12 months.",
+            "Buyers and sellers are solely responsible for complying with waste and animal by-product legislation. This includes permits, approvals of facilities and vehicles, commercial documents for animal by-products (Regulation (EC) 1069/2009), entries in the Greek Electronic Waste Registry, and tax documents for every delivery.",
+          ],
+        },
+        {
+          heading: "Payments and commission",
+          paragraphs: [
+            "Payments are processed by Stripe. The price per unit can be positive (the buyer pays) or negative (the seller pays for collection). The paying party is charged after each delivery is confirmed, by card or SEPA mandate.",
+            "The platform keeps a commission from each payment, according to the fees in force when the agreement is made. Parties who receive money must complete Stripe's identity checks, and Stripe's terms also apply.",
+          ],
+        },
+        {
+          heading: "Disputes",
+          paragraphs: [
+            "If a delivery is disputed, its payment is put on hold and the platform may mediate. Final resolution of disputes is a matter between the parties.",
+          ],
+        },
+        {
+          heading: "Liability",
+          paragraphs: [
+            "To the extent permitted by law, the platform is not liable for the quality or quantity of feedstock, for parties not performing agreements, or for indirect damages. Its total liability is limited to the commission it collected from you in the last 12 months.",
           ],
         },
         {
@@ -229,17 +286,16 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
       updated: UPDATED,
       sections: [
         {
-          heading: "Forecasts are estimates",
+          heading: "Indicative values",
           paragraphs: [
-            "The prices shown are forecasts produced by statistical models from public market data (HEnEx, ENTSO-E, IPTO) and are not guaranteed. Actual prices can differ significantly, especially in unusual market conditions.",
-            "A P10–P90 range means that, by the model's estimate, the actual price should fall inside it about 8 times out of 10. On average it will be lower 1 time in 10 and higher 1 time in 10.",
-            "When input data is missing, we may show a simpler baseline forecast, and we'll mark it clearly.",
+            "The dry matter and biogas yield shown for each feedstock type are typical literature values. Real composition varies with the farm, the season, animal diet and storage. Use a lab analysis for plant feeding decisions.",
           ],
         },
         {
-          heading: "Not advice",
+          heading: "The platform is not a party",
           paragraphs: [
-            "Nothing in this service is investment, financial, legal or trading advice. Always check your plant's support contract and your obligations towards your aggregator (FoSE) or representative.",
+            "Agreements are made directly between buyers and sellers. The platform doesn't guarantee quality, quantity or timely delivery, and doesn't check the legality of shipments.",
+            "Nothing on the platform is legal, tax or technical advice.",
           ],
         },
       ],
@@ -254,6 +310,12 @@ export const legalContent: Record<Locale, Record<LegalDoc, Doc>> = {
             "sb-…-auth-token: keeps you signed in (Supabase). Duration: while you're signed in.",
             "NEXT_LOCALE: remembers your chosen language. Duration: 1 year.",
             "cookie_consent: remembers your cookie choice. Duration: 6 months.",
+          ],
+        },
+        {
+          heading: "Maps",
+          paragraphs: [
+            "Maps are loaded from our map provider, which receives your IP address in order to send you the map images. The map sets no cookies.",
           ],
         },
         {

@@ -1,19 +1,21 @@
 # CLAUDE.md
 
-SaaS that forecasts Greek day-ahead electricity prices (HEnEx DAM, bidding zone GR) for renewable
-plant owners, starting with biogas. Plan and milestones: README.md → "Roadmap".
+**BioFeed Market** (working name): a marketplace for biogas feedstock in Greece. Sellers (livestock farms,
+dairies, olive mills, food producers) list residues and waste; buyers (biogas plants) find them, agree
+supply contracts, record deliveries and pay through the platform (commission per payment).
+The plan and milestones are in README.md → "Roadmap".
 
 ## Layout
 
 - `apps/web/`: Next.js 16 (App Router, Turbopack) + TypeScript + Tailwind v4, next-intl, Supabase SSR.
-  - **Next 16 differs from older versions**: `middleware` is now `src/proxy.ts`, request APIs
+  - **Next 16 differs from older versions**: `middleware` is now `src/proxy.ts`, and request APIs
     (`params`, `searchParams`, `cookies()`) are async. Read `apps/web/node_modules/next/dist/docs/`
     before using an unfamiliar API (see `apps/web/AGENTS.md`).
-- `services/forecast/`: Python 3.12 (uv) FastAPI service, used for ingestion, models, optimizer and
-  jobs from M2 on.
 - `supabase/`: `config.toml`, SQL migrations, bilingual auth email templates, `testing/auth_shim.sql`.
-- `infra/`: docker compose for non-Supabase services.
-- `scripts/db-apply-plain.sh`: applies the shim and migrations to plain Postgres (RLS tests without Docker).
+- `services/forecast/`: dormant Python service from the earlier electricity-price concept. It isn't
+  part of the marketplace MVP; the forecasting work is parked on branch `claude/forecasting-m2-parked`.
+- `infra/`: docker compose for non-Supabase services. `scripts/db-apply-plain.sh` applies the shim and
+  migrations to plain Postgres (RLS tests without Docker).
 
 ## Commands (repo root unless noted)
 
@@ -26,37 +28,47 @@ pnpm lint && pnpm typecheck && pnpm test   # eslint, tsc, vitest unit tests
 pnpm test:db                        # RLS integration tests (TEST_DATABASE_URL, default Supabase local)
 pnpm e2e                            # Playwright (needs supabase start; starts `next dev` itself)
 pnpm --filter web db:types          # regenerate src/lib/supabase/database.types.ts after migrations
-cd services/forecast && uv run pytest && uv run ruff check . && uv run ruff format --check .
 ```
+
+## Domain
+
+- **Organizations** have one `market_role` (`buyer` | `seller`), chosen at signup (or on `/onboarding`
+  for Google sign-ins) and never changed. Company details (legal name, ΑΦΜ with check digit, phone) are
+  required before using the app. **Verification** (`pending`/`verified`/`rejected`) is set only by
+  platform admins through `admin_set_verification()`. Changing legal name or ΑΦΜ resets it to pending.
+- **Sites** are an organization's locations (farm, plant). Exact coordinates are private to the
+  organization; other users only ever get an approximate location.
+- **Feedstock catalog** (`feedstock_types`) is public reference data with indicative dry matter and
+  biogas yield, EWC (ΕΚΑ) codes and animal by-product categories.
+- **Prices** can be negative: a gate fee paid by the seller. Money direction follows the sign.
+- Compliance (waste and animal by-product rules, invoices/myDATA, DAC7) is the parties' responsibility
+  in the terms, but the platform records the relevant document numbers.
 
 ## Conventions
 
-- **Time**: store `timestamptz` in UTC; display in `Europe/Athens` (next-intl `timeZone`). Market data
-  keeps its native resolution as `(delivery_start, resolution_minutes)`: 15-min from 2025-10-01,
-  hourly before. DST days have 92/100 quarter-hours.
-- **Tenancy**: every org-scoped table has `org_id` (or reaches it through a parent) and RLS via
+- **Time**: store `timestamptz` in UTC; display in `Europe/Athens` (next-intl `timeZone`).
+- **Tenancy/RLS**: every org-scoped table has `org_id` (or reaches it through a parent) and RLS via
   `public.is_org_member()` / `is_org_owner()`. Grant column-level privileges explicitly; `anon` gets
-  nothing. Add RLS tests in `apps/web/tests/db/` for every new table, including cross-org denial.
+  nothing except public reference data. Add RLS tests in `apps/web/tests/db/` for every new table and
+  function, including cross-org denial.
+- **State changes** that involve rules (publishing, offers, accepting, deliveries) go through SQL
+  functions that check role, ownership and verification, not through direct table updates from the app.
 - **Data access in web**: server-only modules in `src/server/*` use the user-scoped client from
-  `src/lib/supabase/server.ts`, so queries go through RLS. Never use a service/secret key in the web app
-  for user data. Multi-row writes that must be atomic go into a `SECURITY INVOKER` SQL function (see
-  `save_plant`).
-- **Plan gating** (from M5) happens server-side in `src/server/entitlements.ts`, never only in the UI.
-- **Validation**: zod schemas in `src/lib/validation/*` are shared by forms and server actions.
-  Error messages are i18n keys under `validation.*`. Accept Greek decimal commas (`1,5`).
-  Python uses pydantic.
+  `src/lib/supabase/server.ts`, so queries go through RLS, and **throw** on query errors (never treat a
+  failed query as "no data"). The only exception, from the payments milestone on, is
+  `src/server/system/*` (webhooks, payments, cron), which may use the Supabase secret key and Stripe
+  secret. Nothing else may.
+- **Validation**: zod schemas in `src/lib/validation/*` are shared by forms and server actions. Error
+  messages are i18n keys under `validation.*`. Accept Greek decimal commas (`1,5`), ΑΦΜ with `EL`
+  prefix and spaces, and Greek phone formats.
 - **Forms**: server actions return `ActionState` (`src/lib/action-state.ts`), and clients use
   `useFormAction` (keeps input on error; no auto-reset). Use `return redirect(...)` from
   `@/i18n/navigation` in actions. When redirecting into a different locale, call `persistLocale()` first.
 - **i18n**: Greek is the default (no URL prefix), English is under `/en`. Every string goes in
   `apps/web/messages/{el,en}.json`, and both files must have identical keys (a unit test enforces
   this). Use `Link`/`redirect`/`useRouter` from `@/i18n/navigation`, not `next/*`.
-- **UI**: mobile-first; native `<select>` for dropdowns; components in `src/components/ui` follow the
-  shadcn pattern (Tailwind tokens in `globals.css`).
-- **Migrations**: new timestamped file per change once a migration has been deployed; after changing
-  schema, regenerate or update `database.types.ts`.
-- **Forecasting (M2+)**: never leak future data. Features take an `as_of` cutoff and only use rows with
-  `issued_at <= as_of`. Jobs must be idempotent (upserts on natural keys), logged in `job_runs`, and
-  retried. When data is missing, fall back to the baseline and flag it.
+- **UI**: mobile-first, for non-technical users (farmers): large tap targets, native `<select>`,
+  plain Greek. Maps use Leaflet via `src/components/map/*`, loaded client-side only; the tile URL
+  comes from env.
+- **Migrations**: new timestamped file per change; after changing schema, update `database.types.ts`.
 - **Secrets**: only in env vars, documented in `.env.example`. Never commit `.env*`.
-- Forecasts are estimates, not advice. Keep the disclaimer visible in footer and legal pages.

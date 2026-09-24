@@ -7,7 +7,7 @@ const handleI18nRouting = createIntlMiddleware(routing);
 
 // Path (without locale prefix) prefixes that need a signed-in user. This is only an optimistic
 // redirect; every protected page and action verifies the session again on the server.
-const PROTECTED = ["/dashboard", "/plants", "/settings"];
+const PROTECTED = ["/dashboard", "/sites", "/settings", "/onboarding", "/admin"];
 const AUTH_PAGES = ["/login", "/signup"];
 
 function stripLocale(pathname: string): { locale: string; path: string } {

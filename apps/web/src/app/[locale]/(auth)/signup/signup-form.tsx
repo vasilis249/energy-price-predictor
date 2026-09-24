@@ -2,20 +2,23 @@
 
 import { useTranslations } from "next-intl";
 import { Field, fieldProps, FormMessage, ValidationMessage } from "@/components/forms/field";
+import { RolePicker } from "@/components/forms/role-picker";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { useFormAction } from "@/components/forms/use-form-action";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/i18n/navigation";
 import { MIN_PASSWORD_LENGTH } from "@/lib/validation/auth";
+import type { MarketRole } from "@/lib/validation/organization";
 import { signup } from "../actions";
 
-export function SignupForm() {
+export function SignupForm({ role }: { role?: MarketRole }) {
   const t = useTranslations("auth");
   const { state, pending, onSubmit, fieldErrors } = useFormAction(signup);
 
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-4">
       <FormMessage messageKey={state.status === "error" ? state.formError : undefined} variant="error" />
+      <RolePicker defaultValue={role} error={fieldErrors.marketRole} />
       <Field name="fullName" label={t("fullName")} error={fieldErrors.fullName}>
         <Input {...fieldProps("fullName", fieldErrors.fullName)} autoComplete="name" required maxLength={120} />
       </Field>

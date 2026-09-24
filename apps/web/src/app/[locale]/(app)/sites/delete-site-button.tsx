@@ -11,10 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { deletePlantAction } from "./actions";
+import { deleteSiteAction } from "./actions";
 
-export function DeletePlantButton({ id, name }: { id: string; name: string }) {
-  const t = useTranslations("plants");
+export function DeleteSiteButton({ id, name }: { id: string; name: string }) {
+  const t = useTranslations("sites");
   const tc = useTranslations("common");
   return (
     <Dialog>
@@ -27,7 +27,7 @@ export function DeletePlantButton({ id, name }: { id: string; name: string }) {
       <DialogContent>
         <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
         <DialogDescription>{t("deleteConfirmBody", { name })}</DialogDescription>
-        <form action={deletePlantAction} className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <form action={deleteSiteAction} className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <input type="hidden" name="id" value={id} />
           <DialogClose asChild>
             <Button type="button" variant="outline">

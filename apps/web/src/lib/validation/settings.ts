@@ -6,7 +6,3 @@ export const profileSchema = z.object({
   fullName: requiredText(120),
   locale: z.enum(locales, { error: "required" }),
 });
-
-export const organizationSchema = z.object({
-  orgName: requiredText(120),
-});

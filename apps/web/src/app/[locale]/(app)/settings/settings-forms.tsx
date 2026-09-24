@@ -33,26 +33,37 @@ export function ProfileForm({ fullName, locale }: { fullName: string; locale: st
   );
 }
 
-export function OrganizationForm({ name, canEdit }: { name: string; canEdit: boolean }) {
+type OrgDefaults = { name: string; legalName: string; vatNumber: string; phone: string };
+
+export function OrganizationForm({ org, canEdit }: { org: OrgDefaults; canEdit: boolean }) {
   const t = useTranslations();
   const { state, pending, onSubmit, fieldErrors: e } = useFormAction(updateOrganization);
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-4">
       <FormMessage messageKey={state.status === "error" ? state.formError : undefined} variant="error" />
       <FormMessage messageKey={state.status === "success" ? state.message : undefined} variant="success" />
-      <Field
-        name="orgName"
-        label={t("auth.orgName")}
-        hint={canEdit ? undefined : t("settings.orgOwnerOnly")}
-        error={e.orgName}
-      >
-        <Input
-          {...fieldProps("orgName", e.orgName, !canEdit)}
-          defaultValue={name}
-          maxLength={120}
-          disabled={!canEdit}
-        />
-      </Field>
+      <fieldset disabled={!canEdit} className="grid gap-4">
+        <Field name="orgName" label={t("settings.orgName")} error={e.orgName}>
+          <Input {...fieldProps("orgName", e.orgName)} defaultValue={org.name} maxLength={120} />
+        </Field>
+        <Field name="legalName" label={t("onboarding.legalName")} error={e.legalName}>
+          <Input {...fieldProps("legalName", e.legalName)} defaultValue={org.legalName} maxLength={200} />
+        </Field>
+        <Field name="vatNumber" label={t("onboarding.vatNumber")} error={e.vatNumber}>
+          <Input
+            {...fieldProps("vatNumber", e.vatNumber)}
+            defaultValue={org.vatNumber}
+            inputMode="numeric"
+            maxLength={14}
+          />
+        </Field>
+        <Field name="phone" label={t("onboarding.phone")} error={e.phone}>
+          <Input {...fieldProps("phone", e.phone)} defaultValue={org.phone} type="tel" inputMode="tel" />
+        </Field>
+      </fieldset>
+      <p className="text-xs text-muted-foreground">
+        {canEdit ? t("settings.identityChangeNote") : t("settings.orgOwnerOnly")}
+      </p>
       {canEdit && (
         <SubmitButton pending={pending} className="justify-self-start">
           {t("common.save")}

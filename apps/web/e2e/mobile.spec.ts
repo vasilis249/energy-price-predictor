@@ -5,7 +5,7 @@ async function expectNoHorizontalScroll(page: Page) {
   expect(overflow).toBeLessThanOrEqual(0);
 }
 
-for (const path of ["/", "/en", "/login", "/signup", "/privacy"]) {
+for (const path of ["/", "/en", "/login", "/signup", "/feedstocks", "/privacy"]) {
   test(`${path} fits a phone screen`, async ({ page }) => {
     await page.goto(path);
     await expect(page.locator("h1, h2").first()).toBeVisible();

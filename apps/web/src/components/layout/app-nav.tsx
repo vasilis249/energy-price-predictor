@@ -1,6 +1,6 @@
 "use client";
 
-import { Factory, LayoutDashboard, LogOut, Menu, Settings, X } from "lucide-react";
+import { BookOpen, LayoutDashboard, LogOut, MapPin, Menu, Settings, ShieldCheck, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -11,16 +11,26 @@ import { LanguageSwitcher } from "./language-switcher";
 
 const items = [
   { href: "/dashboard", key: "dashboard", icon: LayoutDashboard },
-  { href: "/plants", key: "plants", icon: Factory },
+  { href: "/sites", key: "sites", icon: MapPin },
+  { href: "/feedstocks", key: "catalog", icon: BookOpen },
   { href: "/settings", key: "settings", icon: Settings },
 ] as const;
+const adminItem = { href: "/admin", key: "admin", icon: ShieldCheck } as const;
 
-function NavLinks({ onNavigate, vertical }: { onNavigate?: () => void; vertical?: boolean }) {
+function NavLinks({
+  onNavigate,
+  vertical,
+  isAdmin,
+}: {
+  onNavigate?: () => void;
+  vertical?: boolean;
+  isAdmin: boolean;
+}) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   return (
     <>
-      {items.map(({ href, key, icon: Icon }) => {
+      {[...items, ...(isAdmin ? [adminItem] : [])].map(({ href, key, icon: Icon }) => {
         const active = pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
@@ -56,14 +66,14 @@ function SignOutButton({ className }: { className?: string }) {
   );
 }
 
-export function AppNav({ email }: { email: string | null }) {
+export function AppNav({ email, isAdmin }: { email: string | null; isAdmin: boolean }) {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <nav aria-label={t("mainNavigation")} className="hidden items-center gap-1 md:flex">
-        <NavLinks />
+        <NavLinks isAdmin={isAdmin} />
       </nav>
       <div className="hidden items-center gap-3 md:flex">
         <LanguageSwitcher />
@@ -87,7 +97,7 @@ export function AppNav({ email }: { email: string | null }) {
           </div>
           {email && <p className="truncate text-sm text-muted-foreground">{email}</p>}
           <nav aria-label={t("mainNavigation")} className="grid gap-1">
-            <NavLinks vertical onNavigate={() => setOpen(false)} />
+            <NavLinks vertical isAdmin={isAdmin} onNavigate={() => setOpen(false)} />
           </nav>
           <div className="flex items-center justify-between border-t pt-3">
             <LanguageSwitcher />
