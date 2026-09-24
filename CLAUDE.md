@@ -40,6 +40,12 @@ pnpm --filter web db:types          # regenerate src/lib/supabase/database.types
   organization; other users only ever get an approximate location.
 - **Feedstock catalog** (`feedstock_types`) is public reference data with indicative dry matter and
   biogas yield, EWC (ΕΚΑ) codes and animal by-product categories.
+- **Listings** (sellers only): `draft → active ↔ paused → closed`. Status changes go through
+  `set_listing_status()`; only verified sellers can publish, and closed is final. Sites used by a
+  listing can't be deleted.
+- **Buyers never read `listings` directly.** They use `search_listings(site, …)` from one of their own
+  sites, which returns only active listings of verified sellers, a ~5 km grid location
+  (`round(x*20)/20`) and a distance rounded to 5 km. Keep new buyer-facing reads to the same rule.
 - **Prices** can be negative: a gate fee paid by the seller. Money direction follows the sign.
 - Compliance (waste and animal by-product rules, invoices/myDATA, DAC7) is the parties' responsibility
   in the terms, but the platform records the relevant document numbers.

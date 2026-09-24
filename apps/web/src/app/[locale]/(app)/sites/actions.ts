@@ -44,7 +44,15 @@ export async function deleteSiteAction(formData: FormData): Promise<void> {
   const locale = await getLocale();
   const id = siteId.safeParse(formData.get("id"));
   if (id.success) {
-    await deleteSite(id.data);
+    try {
+      await deleteSite(id.data);
+    } catch (error) {
+      // Listings reference their site (on delete restrict).
+      if ((error as { code?: string }).code === "23503") {
+        return redirect({ href: { pathname: "/sites", query: { notice: "inUse" } }, locale });
+      }
+      throw error;
+    }
     revalidatePath("/[locale]", "layout");
   }
   return redirect({ href: { pathname: "/sites", query: { notice: "deleted" } }, locale });

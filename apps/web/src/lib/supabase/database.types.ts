@@ -9,6 +9,91 @@ export type Database = {
   };
   public: {
     Tables: {
+      listings: {
+        Row: {
+          available_from: string;
+          available_until: string | null;
+          created_at: string;
+          description: string | null;
+          dm_pct: number | null;
+          feedstock_code: string;
+          id: string;
+          org_id: string;
+          price_per_unit: number;
+          published_at: string | null;
+          quantity: number;
+          quantity_period: Database["public"]["Enums"]["quantity_period"];
+          site_id: string;
+          status: Database["public"]["Enums"]["listing_status"];
+          title: string;
+          transport: Database["public"]["Enums"]["transport_terms"];
+          unit: Database["public"]["Enums"]["quantity_unit"];
+          updated_at: string;
+        };
+        Insert: {
+          available_from: string;
+          available_until?: string | null;
+          created_at?: string;
+          description?: string | null;
+          dm_pct?: number | null;
+          feedstock_code: string;
+          id?: string;
+          org_id: string;
+          price_per_unit: number;
+          published_at?: string | null;
+          quantity: number;
+          quantity_period: Database["public"]["Enums"]["quantity_period"];
+          site_id: string;
+          status?: Database["public"]["Enums"]["listing_status"];
+          title: string;
+          transport?: Database["public"]["Enums"]["transport_terms"];
+          unit: Database["public"]["Enums"]["quantity_unit"];
+          updated_at?: string;
+        };
+        Update: {
+          available_from?: string;
+          available_until?: string | null;
+          created_at?: string;
+          description?: string | null;
+          dm_pct?: number | null;
+          feedstock_code?: string;
+          id?: string;
+          org_id?: string;
+          price_per_unit?: number;
+          published_at?: string | null;
+          quantity?: number;
+          quantity_period?: Database["public"]["Enums"]["quantity_period"];
+          site_id?: string;
+          status?: Database["public"]["Enums"]["listing_status"];
+          title?: string;
+          transport?: Database["public"]["Enums"]["transport_terms"];
+          unit?: Database["public"]["Enums"]["quantity_unit"];
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "listings_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "listings_site_id_fkey";
+            columns: ["site_id"];
+            isOneToOne: false;
+            referencedRelation: "sites";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "listings_feedstock_code_fkey";
+            columns: ["feedstock_code"];
+            isOneToOne: false;
+            referencedRelation: "feedstock_types";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
       memberships: {
         Row: {
           created_at: string;
@@ -235,6 +320,40 @@ export type Database = {
         Returns: string;
       };
       is_platform_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
+      search_listings: {
+        Args: {
+          p_feedstock_codes?: string[];
+          p_limit?: number;
+          p_listing_id?: string;
+          p_max_km?: number;
+          p_price?: string;
+          p_site_id: string;
+        };
+        Returns: {
+          approx_lat: number;
+          approx_lon: number;
+          available_from: string;
+          available_until: string | null;
+          description: string | null;
+          distance_km: number;
+          dm_pct: number | null;
+          feedstock_code: string;
+          listing_id: string;
+          municipality: string | null;
+          price_per_unit: number;
+          published_at: string | null;
+          quantity: number;
+          quantity_period: Database["public"]["Enums"]["quantity_period"];
+          seller_name: string;
+          title: string;
+          transport: Database["public"]["Enums"]["transport_terms"];
+          unit: Database["public"]["Enums"]["quantity_unit"];
+        }[];
+      };
+      set_listing_status: {
+        Args: { p_listing_id: string; p_status: Database["public"]["Enums"]["listing_status"] };
+        Returns: undefined;
+      };
       is_valid_afm: { Args: { afm: string }; Returns: boolean };
     };
     Enums: {
@@ -246,10 +365,13 @@ export type Database = {
         | "food_industry"
         | "food_waste"
         | "other";
+      listing_status: "draft" | "active" | "paused" | "closed";
       market_role: "buyer" | "seller";
       org_role: "owner" | "member";
+      quantity_period: "week" | "month" | "year";
       quantity_unit: "t" | "m3";
       site_type: "biogas_plant" | "livestock_farm" | "agriculture" | "food_industry" | "other";
+      transport_terms: "seller_delivers" | "buyer_collects" | "negotiable";
       verification_status: "pending" | "verified" | "rejected";
     };
     CompositeTypes: {

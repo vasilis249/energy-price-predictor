@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { getCurrentOrg, getProfile, getSessionUser } from "@/server/auth";
+import { listMyListings, searchListings } from "@/server/listings";
 import { listSites } from "@/server/sites";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/dashboard">): Promise<Metadata> {
@@ -22,6 +23,11 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/das
   const [user, profile, org] = await Promise.all([getSessionUser(), getProfile(), getCurrentOrg()]);
   const sites = org ? await listSites(org.id) : [];
   const isBuyer = org?.market_role === "buyer";
+  const isSeller = org?.market_role === "seller";
+  const listings = org && isSeller ? await listMyListings(org.id) : [];
+  const countOf = (status: string) => listings.filter((l) => l.status === status).length;
+  const originSite = isBuyer ? sites[0] : undefined;
+  const nearby = originSite ? await searchListings({ siteId: originSite.id, maxKm: 50 }) : [];
   const name = profile?.full_name || user?.email || "";
 
   return (
@@ -44,15 +50,45 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/das
               {isBuyer ? t("dashboard.buyerSearchTitle") : t("dashboard.sellerListingsTitle")}
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex min-h-40 flex-col items-center justify-center gap-3 rounded-lg border border-dashed bg-muted/40 p-6 text-center">
-              <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium">
-                {t("common.comingSoon")}
-              </span>
-              <p className="max-w-md text-sm text-muted-foreground">
-                {isBuyer ? t("dashboard.buyerSearchBody") : t("dashboard.sellerListingsBody")}
-              </p>
-            </div>
+          <CardContent className="grid gap-4">
+            <p className="text-sm text-muted-foreground">
+              {isBuyer ? t("dashboard.buyerSearchBody") : t("dashboard.sellerListingsBody")}
+            </p>
+            {isSeller && (
+              <>
+                <p className="text-sm font-medium">
+                  {t("dashboard.listingsCount", { active: countOf("active"), draft: countOf("draft") })}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Button asChild>
+                    <Link href="/listings/new">
+                      <Plus aria-hidden />
+                      {t("dashboard.newListing")}
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/listings">{t("dashboard.manageListings")}</Link>
+                  </Button>
+                </div>
+              </>
+            )}
+            {isBuyer && (
+              <>
+                {originSite && (
+                  <p className="text-sm font-medium">
+                    {t("dashboard.nearbyCount", { count: nearby.length, site: originSite.name })}
+                  </p>
+                )}
+                <div>
+                  <Button asChild>
+                    <Link href="/search">
+                      <Search aria-hidden />
+                      {t("dashboard.openSearch")}
+                    </Link>
+                  </Button>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
         <div className="grid content-start gap-4">

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/sites">)
   return { title: t("title") };
 }
 
-const NOTICES = { created: "created", updated: "updated", deleted: "deleted" } as const;
+const NOTICES = { created: "created", updated: "updated", deleted: "deleted", inUse: "inUse" } as const;
 
 export default async function SitesPage({ params, searchParams }: PageProps<"/[locale]/sites">) {
   setRequestLocale((await params).locale as Locale);
@@ -41,7 +41,7 @@ export default async function SitesPage({ params, searchParams }: PageProps<"/[l
         }
       />
       {noticeKey && (
-        <Alert variant="success" className="mb-4">
+        <Alert variant={noticeKey === "inUse" ? "destructive" : "success"} className="mb-4">
           {t(`sites.${noticeKey}`)}
         </Alert>
       )}

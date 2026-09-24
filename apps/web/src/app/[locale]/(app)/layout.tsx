@@ -16,7 +16,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
       <header className="sticky top-0 z-30 border-b bg-card/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
           <Logo href="/dashboard" />
-          <AppNav email={user.email} isAdmin={admin} />
+          <AppNav email={user.email} isAdmin={admin} role={org?.market_role ?? null} />
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>

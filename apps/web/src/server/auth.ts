@@ -1,4 +1,5 @@
 import "server-only";
+import { notFound } from "next/navigation";
 import { cache } from "react";
 import { redirect } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -73,3 +74,10 @@ export const isPlatformAdmin = cache(async (): Promise<boolean> => {
   if (error) throw error;
   return data === true;
 });
+
+/** Pages for one marketplace role only: others (and admins without that role) get a 404. */
+export async function requireMarketRole(role: "buyer" | "seller"): Promise<CurrentOrg> {
+  const org = await getCurrentOrg();
+  if (!org || org.market_role !== role) notFound();
+  return org;
+}

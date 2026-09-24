@@ -30,7 +30,9 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "language": "Language",
-    "mainNavigation": "Main navigation"
+    "mainNavigation": "Main navigation",
+    "listings": "Listings",
+    "search": "Search"
   },
   "home": {
     "title": "Turn your residues into energy",
@@ -147,15 +149,19 @@
     "mustAcceptTerms": "You need to accept the terms to continue.",
     "chooseRole": "Choose whether you buy or offer feedstock.",
     "invalidAfm": "This VAT number (ΑΦΜ) isn't valid. Check the 9 digits.",
-    "invalidPhone": "Enter a valid phone number."
+    "invalidPhone": "Enter a valid phone number.",
+    "tooShort": "This text is too short.",
+    "invalidDate": "Invalid date.",
+    "untilBeforeFrom": "The end date is before the start date.",
+    "priceRequired": "Enter the amount per unit."
   },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome, {name}",
     "sellerListingsTitle": "My listings",
-    "sellerListingsBody": "Soon you'll list the feedstock you have here, to receive offers from biogas plants.",
+    "sellerListingsBody": "List the feedstock you have so biogas plants can find you.",
     "buyerSearchTitle": "Find feedstock",
-    "buyerSearchBody": "Soon you'll find available feedstock near your plant here, with distance and estimated biogas potential.",
+    "buyerSearchBody": "Find feedstock near your plant, with distance and estimated biogas potential.",
     "sitesTitle": "Your sites",
     "sitesSellerEmpty": "Add the site you supply feedstock from (e.g. your farm).",
     "sitesBuyerEmpty": "Add your biogas plant to see distances to available feedstock.",
@@ -164,7 +170,12 @@
     "manageSites": "Manage sites",
     "catalogTitle": "Feedstocks",
     "catalogBody": "See feedstock types and their typical biogas potential.",
-    "catalogLink": "Feedstock catalog"
+    "catalogLink": "Feedstock catalog",
+    "listingsCount": "{active, plural, =0 {None published} one {# published} other {# published}} · {draft, plural, =0 {no drafts} one {# draft} other {# drafts}}",
+    "nearbyCount": "{count, plural, =0 {No listings} one {# listing} other {# listings}} within 50 km of \"{site}\"",
+    "manageListings": "My listings",
+    "newListing": "New listing",
+    "openSearch": "Find feedstock"
   },
   "sites": {
     "title": "Sites",
@@ -202,7 +213,8 @@
       "agriculture": "Farm (crops)",
       "food_industry": "Food industry",
       "other": "Other"
-    }
+    },
+    "inUse": "This site is used by listings and can't be deleted."
   },
   "catalog": {
     "title": "Feedstocks for biogas",
@@ -278,5 +290,123 @@
   "legal": {
     "lastUpdated": "Last updated: {date}",
     "draftNotice": "Draft: this text must be reviewed by a legal advisor before public launch."
+  },
+  "listings": {
+    "title": "My listings",
+    "subtitle": "The feedstock you offer.",
+    "add": "New listing",
+    "newTitle": "New listing",
+    "editTitle": "Edit listing",
+    "empty": "You have no listings yet.",
+    "emptyHint": "Create a listing so biogas plants in your area can find you.",
+    "needSite": "First add the site you supply the feedstock from.",
+    "created": "Listing saved as a draft. Press \"Publish\" to show it to biogas plants.",
+    "updated": "Listing updated.",
+    "deleted": "Draft deleted.",
+    "statusChanged": "Listing status changed.",
+    "sectionWhat": "What you offer",
+    "sectionHowMuch": "Quantity and availability",
+    "sectionPrice": "Price and transport",
+    "fields": {
+      "site": "Site",
+      "feedstock": "Feedstock type",
+      "title": "Title",
+      "titlePlaceholder": "e.g. Slurry from 60 dairy cows",
+      "description": "Description",
+      "descriptionHint": "Composition, storage, how loading works, collection hours, etc.",
+      "unit": "Unit",
+      "quantity": "Quantity",
+      "quantityPeriod": "Per",
+      "availableFrom": "Available from",
+      "availableUntil": "Available until",
+      "availableUntilHint": "Leave empty if it's available continuously.",
+      "dmPct": "Measured dry matter (%)",
+      "dmPctHint": "If you have a lab analysis.",
+      "transport": "Transport",
+      "priceMode": "Who pays?",
+      "priceAmount": "Amount (€ per {unit})"
+    },
+    "priceModes": {
+      "buyer_pays": "The biogas plant pays me",
+      "free": "Free, as long as they collect it",
+      "gate_fee": "I pay to have it collected"
+    },
+    "gateFeeHint": "Common for waste that would otherwise cost you to dispose of.",
+    "transportTerms": {
+      "seller_delivers": "I deliver it",
+      "buyer_collects": "The plant collects it",
+      "negotiable": "To be agreed"
+    },
+    "periods": {
+      "week": "week",
+      "month": "month",
+      "year": "year"
+    },
+    "units": {
+      "t": "tonnes",
+      "m3": "m³"
+    },
+    "status": {
+      "draft": "Draft",
+      "active": "Published",
+      "paused": "Paused",
+      "closed": "Closed"
+    },
+    "actions": {
+      "publish": "Publish",
+      "pause": "Pause",
+      "resume": "Publish again",
+      "close": "Close",
+      "closeConfirmTitle": "Close listing?",
+      "closeConfirmBody": "The listing will no longer appear in searches and can't be reopened."
+    },
+    "publishNeedsVerification": "You'll be able to publish once your business is verified. Until then the listing stays a draft.",
+    "errors": {
+      "notVerified": "Only verified businesses can publish listings.",
+      "periodEnded": "The availability period has ended. Change the dates.",
+      "closed": "This listing is closed and can't be changed."
+    },
+    "summary": {
+      "quantity": "{quantity} {unit} / {period}",
+      "biogas": "≈ {m3} m³ biogas / {period}",
+      "electricity": "≈ {mwh} MWh electricity / {period}",
+      "estimateNote": "Indicative estimate using the catalog's typical values.",
+      "priceBuyerPays": "{amount} / {unit}",
+      "priceFree": "Free",
+      "priceGateFee": "Seller pays {amount} / {unit}",
+      "published": "Published {date}"
+    }
+  },
+  "search": {
+    "title": "Find feedstock",
+    "subtitle": "Available feedstock from verified producers, nearest first.",
+    "from": "Distance from",
+    "needSite": "Add your plant to search for feedstock and see distances.",
+    "types": "Type",
+    "allTypes": "All types",
+    "maxKm": "Maximum distance",
+    "anyDistance": "Any",
+    "km": "{km} km",
+    "price": "Price",
+    "anyPrice": "All",
+    "submit": "Search",
+    "results": "{count, plural, =0 {No results} one {# listing} other {# listings}}",
+    "empty": "No listings match these filters. Try a larger distance or another type.",
+    "distance": "~{km} km",
+    "mapLabel": "Listings map",
+    "yourSite": "Your plant",
+    "approxLocation": "Area: {place}",
+    "approxNote": "The exact location is shared after an agreement.",
+    "seller": "Seller",
+    "verifiedSeller": "Verified seller",
+    "availability": "Availability",
+    "availableFromTo": "{from} – {to}",
+    "availableFromOnward": "From {from}, continuously",
+    "dm": "Dry matter",
+    "dmMeasured": "{pct}% (measured)",
+    "dmTypical": "~{pct}% (typical)",
+    "offerSoon": "Offers are enabled in the platform's next step.",
+    "backToResults": "Back to results",
+    "viewListing": "View"
   }
 }

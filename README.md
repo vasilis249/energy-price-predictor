@@ -84,8 +84,8 @@ Without Docker, RLS tests can run on any plain Postgres:
 1. ✅ Foundation: auth, organizations, i18n, CI
 2. ✅ Marketplace foundation: buyer/seller roles, company details with ΑΦΜ, admin verification, sites
    on a map, public feedstock catalog
-3. Listings and search: sellers publish feedstock (quantity, availability, price or gate fee); buyers
-   search by type, distance and price, in a list or on a map
+3. ✅ Listings and search: sellers publish feedstock (quantity, availability, price or gate fee); buyers
+   search by type, distance and price, in a list or on a map, and see only an approximate location
 4. Offers, counter-offers, messages and supply agreements, with email notifications
 5. Deliveries (weighed quantity, documents) and payments: Stripe Connect, card/SEPA, commission, gate fees
 6. Admin tools, reviews, GDPR export/deletion, deployment and monitoring
